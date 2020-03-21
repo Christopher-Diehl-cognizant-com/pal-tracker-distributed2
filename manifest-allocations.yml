@@ -1,0 +1,19 @@
+applications:
+- name: pal-tracker-distributed-allocations-780449
+  path: ./applications/allocations-server/build/libs/allocations-server.jar
+  routes:
+  - route: pal-tracker-distributed-allocations-780449.cfapps.io
+  memory: 1G
+  instances: 1
+  env:
+    #REGISTRATION_SERVER_ENDPOINT: http://registration-pal-prabhu-kasi.cfapps.io
+    JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ } }'
+    GRANT_TYPE: authorization_code, client_credentials
+    MANAGEMENT_ENDPOINT_HEALTH_SHOWDETAILS: 'always'
+    MANAGEMENT_HEALTH_CIRCUITBREAKERS_ENABLED: 'TRUE'
+    MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: 'info,health,metrics,circuitbreakers'
+    MANAGEMENT_HEALTH_HYSTRIX_ENABLED: 'TRUE'
+  services:
+  - tracker-allocations-database
+  - tracker-service-registry
+  - tracker-sso

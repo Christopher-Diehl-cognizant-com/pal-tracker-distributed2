@@ -1,0 +1,18 @@
+applications:
+- name: pal-tracker-distributed-registration-780449
+  path: ./applications/registration-server/build/libs/registration-server.jar
+  routes:
+  - route: pal-tracker-distributed-registration-780449.cfapps.io
+  memory: 1G
+  instances: 1
+  env:
+    JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ } }'
+    GRANT_TYPE: client_credentials
+    MANAGEMENT_ENDPOINT_HEALTH_SHOWDETAILS: 'always'
+    MANAGEMENT_HEALTH_CIRCUITBREAKERS_ENABLED: 'TRUE'
+    MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: 'info,health,metrics,circuitbreakers'
+    MANAGEMENT_HEALTH_HYSTRIX_ENABLED: 'TRUE'
+  services:
+  - tracker-registration-database
+  - tracker-service-registry
+  - tracker-sso
